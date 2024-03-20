@@ -6,3 +6,4 @@ from student.models import Student
 class StudentListView(ListView):
     template_name = 'list.html'
     model = Student
+    context_object_name = 'students'

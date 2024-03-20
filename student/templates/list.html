@@ -1,5 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block body_block %}
-    <h2>This is student list page...</h2>
+    <h2>Here are my students...</h2>
+
+    <div class="d-flex student-list">
+        {% for student in students %}
+            <div class="card me-3" style="width: 18rem;">
+{#              <img src="{% url 'student.avatar' %}" class="card-img-top" alt="{{ student.name }}">#}
+              <div class="card-body">
+                <h5 class="card-title">{{ student.name }}</h5>
+                <p class="card-text">{{ student.age }}</p>
+                <button class="btn btn-primary">View Detail</button>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

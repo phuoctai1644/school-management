@@ -10,7 +10,7 @@ class Student(models.Model):
     name = models.CharField(max_length=256)
     age = models.PositiveIntegerField()
     sex = models.CharField(max_length=10, choices=sex_choices)
-    avatar = models.ImageField(upload_to='student_pics')
+    avatar = models.ImageField(upload_to='student_pics', blank=True)
 
     def __str__(self):
         return self.name
