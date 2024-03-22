@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_block %}
+    <link rel="stylesheet" href="{% static 'list.css' %}">
+{% endblock %}
+
+{% block body_block %}
+    <h2>Here are my students...</h2>
+
+    <div class="d-flex student-list mt-2">
+        {% for student in students %}
+            <div class="card student-item me-3">
+                <div class="avatar">
+                    <img src="{{ student.avatar.url }}" class="card-img-top" alt="{{ student.name }}">
+                </div>
+                <div class="card-body student-info">
+                    <div>
+                        <h5 class="card-title">{{ student.name }}</h5>
+                        <p class="card-text">{{ student.age }}</p>
+                    </div>
+                    <button class="btn btn-primary mt-2">View Detail</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
