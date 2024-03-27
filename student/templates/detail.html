@@ -1,5 +1,26 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head_block %}
+    <link rel="stylesheet" href="{% static 'detail.css' %}">
+{% endblock %}
 
 {% block body_block %}
-    <h2>This is student detail page...</h2>
+    <div class="d-flex mt-5">
+        <a class="btn btn-primary ms-auto" href="{% url 'student:List' %}">Back to student list</a>
+    </div>
+    <div class="row mt-3">
+        <div class="col-8">
+            <div class="avatar-wrapper">
+                <img src="{{ student.avatar.url }}" alt="{{ student.name }}">
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="student-info">
+                <h2>{{ student.name }}</h2>
+                <p>Age: {{ student.age }}</p>
+            </div>
+        </div>
+    </div>
 {% endblock %}
