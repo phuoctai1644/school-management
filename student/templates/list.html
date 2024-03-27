@@ -70,7 +70,7 @@
                         <h5 class="card-title">{{ student.name }}</h5>
                         <p class="card-text">Age: {{ student.age }}</p>
                     </div>
-                    <button class="btn btn-primary mt-2">View Detail</button>
+                    <a class="btn btn-primary mt-2" href="{% url 'student:Detail' pk=student.id %}">View Detail</a>
                 </div>
             </div>
         {% endfor %}

@@ -28,3 +28,8 @@ def student_list(request):
         )
         new_student.save()
         return HttpResponseRedirect(reverse('student:List'))
+
+
+def student_detail(request, pk):
+    student_obj = Student.objects.get(id=pk)
+    return render(request, 'detail.html', {'student': student_obj})
