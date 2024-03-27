@@ -6,18 +6,69 @@
 {% endblock %}
 
 {% block body_block %}
-    <h2>Here are my students...</h2>
+    <div class="d-flex justify-content-between">
+        <h2>Here are my students...</h2>
+        <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add Student
+        </button>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Student</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                <form class="modal-body" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="nameInput" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="nameInput" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="ageInput" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="ageInput" min="10" name="age">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Sex</label>
+                        <div class="d-flex">
+                            <div class="d-flex">
+                                <input type="checkbox" class="me-1" id="male" value="male" name="sex">
+                                <label for="male">Male</label>
+                            </div>
+                            <div class="d-flex ms-4">
+                                <input type="checkbox" class="me-1" id="female" value="female" name="sex">
+                                <label for="female">Female</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="avatarInput" class="form-label">Avatar</label>
+                        <input type="file" class="form-control" id="avatarInput" name="avatar">
+                    </div>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
 
     <div class="d-flex student-list mt-2">
         {% for student in students %}
             <div class="card student-item me-3">
                 <div class="avatar">
-                    <img src="{{ student.avatar.url }}" class="card-img-top" alt="{{ student.name }}">
+                    {% if student.avatar %}
+                        <img src="{{ student.avatar.url }}" class="card-img-top" alt="{{ student.name }}">
+                    {% endif %}
                 </div>
                 <div class="card-body student-info">
                     <div>
                         <h5 class="card-title">{{ student.name }}</h5>
-                        <p class="card-text">{{ student.age }}</p>
+                        <p class="card-text">Age: {{ student.age }}</p>
                     </div>
                     <button class="btn btn-primary mt-2">View Detail</button>
                 </div>

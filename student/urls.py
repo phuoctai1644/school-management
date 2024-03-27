@@ -4,5 +4,5 @@ from student import views
 app_name = 'student'
 
 urlpatterns = [
-    path('', views.StudentListView.as_view(), name='List')
+    path('', views.student_list, name='List')
 ]
