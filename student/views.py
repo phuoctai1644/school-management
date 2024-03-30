@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView
 from student.models import Student
 from django.urls import reverse
+from django.shortcuts import redirect
 
 
 class StudentListView(ListView):
@@ -33,3 +34,9 @@ def student_list(request):
 def student_detail(request, pk):
     student_obj = Student.objects.get(id=pk)
     return render(request, 'detail.html', {'student': student_obj})
+
+
+def delete_student(request, pk):
+    student = Student.objects.get(id=pk)
+    student.delete()
+    return redirect('student:List')
