@@ -3,8 +3,8 @@ from django.db import models
 
 class Student(models.Model):
     sex_choices = (
-        ('Male', 'male'),
-        ('Female', 'female')
+        ('male', 'Male'),
+        ('female', 'Female')
     )
 
     name = models.CharField(max_length=256)
