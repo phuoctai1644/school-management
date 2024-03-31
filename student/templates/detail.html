@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head_block %}
-    <link rel="stylesheet" href="{% static 'detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
 {% endblock %}
 
 {% block body_block %}
@@ -23,9 +23,53 @@
             </div>
 
             <div class="student-actions d-flex">
-                <button class="btn btn-primary">Edit</button>
-                <button class="btn btn-danger ms-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                {# Edit student template #}
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">{{ student.name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                         </div>
+                        <form class="modal-body" id="edit-form" method="POST" enctype="multipart/form-data" action="{% url 'student:Edit' student.id %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="nameInput" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="nameInput" name="name" value="{{ student.name }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="ageInput" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="ageInput" min="10" name="age" value={{ student.age }}>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Sex</label>
+                                <div class="d-flex">
+                                    <div class="d-flex">
+                                        <input type="radio" class="me-1" id="male" value="male" name="sex" {% if student.sex == 'male' %}checked{% endif %}>
+                                        <label for="male">Male</label>
+                                    </div>
+                                    <div class="d-flex ms-4">
+                                        <input type="radio" class="me-1" id="female" value="female" name="sex" {% if student.sex == 'female' %}checked{% endif %}>
+                                        <label for="female">Female</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="avatarInput" class="form-label">Avatar</label>
+                                <input type="file" class="form-control" id="avatarInput" name="avatar" value={{ student.avatar }}>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" id="submit-button" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
 
+                {# Delete student template #}
+                <button class="btn btn-danger ms-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <form class="modal-content" method="POST" action="{% url 'student:Delete Student' student.id %}">
@@ -47,4 +91,8 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block script_block %}
+    <script src="{% static 'js/detail.js' %}"></script>
 {% endblock %}

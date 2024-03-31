@@ -1,9 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from student.models import Student
 from django.urls import reverse
-from django.shortcuts import redirect
 
 
 class StudentListView(ListView):
@@ -28,7 +26,7 @@ def student_list(request):
             avatar=request.FILES['avatar']
         )
         new_student.save()
-        return HttpResponseRedirect(reverse('student:List'))
+        return redirect('student:List')
 
 
 def student_detail(request, pk):
@@ -40,3 +38,20 @@ def delete_student(request, pk):
     student = Student.objects.get(id=pk)
     student.delete()
     return redirect('student:List')
+
+
+def edit_student(request, pk):
+    if request.method == 'POST':
+        student = Student.objects.get(id=pk)
+        fields = [field.name for field in student._meta.get_fields()]
+        except_field = ['id', 'avatar']
+        for field in fields:
+            if field not in except_field and getattr(student, field) and request.POST.get(field) is not None:
+                setattr(student, field, request.POST[field])
+
+        if request.FILES and request.FILES['avatar']:
+            setattr(student, 'avatar', request.FILES['avatar'])
+        student.save()
+
+    redirect_url = reverse('student:Detail', kwargs={'pk': pk})
+    return redirect(redirect_url)
